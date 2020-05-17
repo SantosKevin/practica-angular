@@ -1,0 +1,13 @@
+.elipse{
+    background-color: rgb(61, 48, 48);
+    display: inline;
+    border-top-right-radius: 0.7em;
+    border-bottom-left-radius: 0.7em;
+    color: white;
+}
+.fondo{
+    background-color: #e5e5e5;
+}
+.fondo-body{
+    background-color: #e5e5e565;
+}

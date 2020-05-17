@@ -1,0 +1,15 @@
+.entrada{
+    background-color: burlywood;
+    width: 3.5em;
+    color:black;
+}
+.entrada:focus{
+    background-color: chartreuse;
+    color: black;
+}
+.letra{
+    font-family: "Comic Sans MS";
+}
+.ocultar{
+    display: none;
+}
