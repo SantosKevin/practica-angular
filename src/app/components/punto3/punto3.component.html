@@ -1,61 +1,64 @@
-<div class="row mt-5 mb-5 justify-content-center">
-    <div class="col-12 col-md-8">
-        <form class="card" #formregistro="ngForm" >
-            <div class="card-header fondo"> 
-                <h3 class=" font-weight-bold">  Gestion de Pasajes:  </h3>  
-            </div>
-              <div class="card-body fondo-body">
+<div class="fondoImagen">
+    <div class="row mt-3 mb-5 justify-content-center p-2 opacidad">
+      <div class="col-12 col-md-8">
+          <form class="card" #formregistro="ngForm" >
+              <div class="card-header fondo"> 
+                  <h3 class=" font-weight-bold">  Gestion de Pasajes:  </h3>  
+              </div>
+                <div class="card-body fondo-body">
+                  <div class="row form-group">
+                    <label class="col-sm-12 col-md-4 font-weight-bold">DNI Pasajero: </label>
+                    <input class="form-control col-sm-12 col-md-8" pattern="[0-9]{7,8}" minlength="7" maxlength="8" type="text" id="dnipasajero" #dnipasajero="ngModel" name="txtDNI"  [(ngModel)]="pasaje.dniPasajero" placeholder="dni pasajero" required/>
+                    <div *ngIf="dnipasajero.invalid && (dnipasajero.dirty || dnipasajero.touched)" class="bg-danger mt-1 text-white col-sm-12 offset-md-4 col-md-8">
+                      <div *ngIf="dnipasajero.errors.required">
+                        DNI es requerido.
+                      </div>
+                      <div *ngIf="dnipasajero.errors.pattern">
+                        DNI debe ser un campo numerico y tener entre 7 y 9 caracteres.
+                      </div>
+                    </div>
+                  </div>
                 <div class="row form-group">
-                  <label class="col-sm-12 col-md-4 font-weight-bold">DNI Pasajero: </label>
-                  <input class="form-control col-sm-12 col-md-8" pattern="[0-9]{7,8}" minlength="7" maxlength="8" type="text" id="dnipasajero" #dnipasajero="ngModel" name="txtDNI"  [(ngModel)]="pasaje.dniPasajero" placeholder="dni pasajero" required/>
-                  <div *ngIf="dnipasajero.invalid && (dnipasajero.dirty || dnipasajero.touched)" class="bg-danger mt-1 text-white col-sm-12 offset-md-4 col-md-8">
-                    <div *ngIf="dnipasajero.errors.required">
-                      DNI es requerido.
-                    </div>
-                    <div *ngIf="dnipasajero.errors.pattern">
-                      DNI debe ser un campo numerico y tener entre 7 y 9 caracteres.
+                  <label class="col-sm-12 col-md-4 font-weight-bold" >Precio del Pasaje: </label>
+                  <input class="form-control col-sm-12 col-md-8" #precio="ngModel" type="number" name="txtPrecio" [(ngModel)]="pasaje.precioPasaje" placeholder="precio" (ngModelChange)="onCambio($event)" required/>
+                  <div *ngIf="precio.invalid && (precio.dirty || precio.touched)" class="bg-danger mt-1 text-white col-sm-12 offset-md-4 col-md-8">
+                    <div *ngIf="precio.errors.required">
+                      Precio es requerido.
                     </div>
                   </div>
                 </div>
-              <div class="row form-group">
-                <label class="col-sm-12 col-md-4 font-weight-bold" >Precio del Pasaje: </label>
-                <input class="form-control col-sm-12 col-md-8" #precio="ngModel" type="number" name="txtPrecio" [(ngModel)]="pasaje.precioPasaje" placeholder="precio" (ngModelChange)="onCambio($event)" required/>
-                <div *ngIf="precio.invalid && (precio.dirty || precio.touched)" class="bg-danger mt-1 text-white col-sm-12 offset-md-4 col-md-8">
-                  <div *ngIf="precio.errors.required">
-                    Precio es requerido.
+                <div class="row form-group">
+                  <label class="col-sm-12 col-md-4 font-weight-bold" for="categoria">Categoria: </label>
+                  <select class="form-control col-sm-12 col-md-8" name="categoria" #categoria="ngModel" [(ngModel)]="pasaje.categoriaPasajero" [ngModelOptions]="{standalone: true}" (ngModelChange)="onCambio($event)" required>
+                    <option [value]="item" *ngFor="let item of categorias">{{item}}</option>
+                  </select>
+                  <div *ngIf="categoria.invalid && (categoria.dirty || categoria.touched)" class="bg-danger mt-1 text-white col-sm-12 offset-md-4 col-md-8">
+                    <div *ngIf="categoria.errors.required">
+                      Categoria es requerida.
+                    </div>             
                   </div>
                 </div>
-              </div>
-              <div class="row form-group">
-                <label class="col-sm-12 col-md-4 font-weight-bold" for="categoria">Categoria: </label>
-                <select class="form-control col-sm-12 col-md-8"  #categoria="ngModel" [(ngModel)]="pasaje.categoriaPasajero" [ngModelOptions]="{standalone: true}" (ngModelChange)="onCambio($event)" required>
-                  <option [value]="item" *ngFor="let item of categorias">{{item}}</option>
-                </select>
-                <div *ngIf="categoria.invalid && (categoria.dirty || categoria.touched)" class="bg-danger mt-1 text-white col-sm-12 offset-md-4 col-md-8">
-                  <div *ngIf="categoria.errors.required">
-                    Categoria es requerida.
-                  </div>             
+                <div class="row form-group">
+                  <label class="col-sm-12 col-md-12 font-weight-bold" *ngIf="mostrarPrecio" for="categoria">Precio Final: <span class="text-danger">{{precioFinal}} </span>  </label>
+                </div>
+                
+                <div class="row form-group">
+                  <div class="col-12 p-3">
+                    <button type="button" class="btn btn-outline-secondary m-2"  (click)="agregarPasaje() ; formregistro.reset()" [disabled]="!(formregistro.form.valid && btnGuardar)"><i class="fas fa-check-square"></i> Guardar</button>                       
+                    <button type="button" class="btn btn-outline-secondary m-2"  (click)="limpiar(); formregistro.reset()" ><i class="fas fa-broom"></i> Limpiar</button>                       
+                    <button type="button" class="btn btn-outline-secondary m-2" (click)="modificarPasaje() ; formregistro.reset() " [disabled]="!(formregistro.form.valid && btnModificar)"><i class="fas fa-edit"></i> Modificar</button>
+                  </div>
+                </div>
+                <div *ngIf="btnModificar">
+                  Presione "Limpiar" para cancelar la modificacion
                 </div>
               </div>
-              <div class="row form-group">
-                <label class="col-sm-12 col-md-4 font-weight-bold" *ngIf="mostrarPrecio" for="categoria">Precio Final: {{precioFinal}} </label>
-              </div>
-              
-              <div class="row form-group">
-                <div class="col-12 p-3">
-                  <button type="button" class="btn btn-outline-secondary m-2"  (click)="agregarPasaje() ; formregistro.reset()" [disabled]="!(formregistro.form.valid && btnGuardar)"><i class="fas fa-check-square"></i> Guardar</button>                       
-                  <button type="button" class="btn btn-outline-secondary m-2"  (click)="limpiar(); formregistro.reset()" ><i class="fas fa-broom"></i> Limpiar</button>                       
-                  <button type="button" class="btn btn-outline-secondary m-2" (click)="modificarPasaje() ; formregistro.reset() " [disabled]="!(formregistro.form.valid && btnModificar)"><i class="fas fa-edit"></i> Modificar</button>
-                </div>
-              </div>
-              <div *ngIf="btnModificar">
-                Presione "Limpiar" para cancelar la modificacion
-              </div>
-            </div>
-          </form>
-    </div>
-    
+            </form>
+      </div>
+      
+  </div>
 </div>
+
 <!-- tabla -->
 <div class="row justify-content-center">
   <div class="col-sm-12 col-md-10 table-responsive">
@@ -78,7 +81,7 @@
             <mfDefaultSorter by="fechaCompra"><i class="fas fa-calendar-alt"></i> Fecha:</mfDefaultSorter>
           </th>
           <th scope="col">
-            <i class="fab fa-angular"></i> Acciones:
+             Acciones:
           </th>
         </tr>
       </thead>
@@ -89,8 +92,10 @@
           <td class="text-right"> {{item.precioPasaje | currency:'USD':true:'1.1-2'}} </td>
           <td> {{item.categoriaPasajero}} </td>
           <td> {{item.fechaCompra | date:'dd/MM/yyyy'}} </td>
-          <td> <button type="button" class="btn btn-outline-secondary mr-1" (click)="seleccionar(item)" ><i class="fas fa-edit"></i></button>     
-          <button type="button" class="btn btn-outline-secondary" (click)="eliminarPasaje(item)" ><i class="fas fa-trash-alt"></i></button></td>  
+          <td> 
+            <button type="button" title="edit" class="btn btn-outline-secondary mr-1 mb-1" (click)="seleccionar(item)" ><i class="fas fa-edit"></i></button>     
+            <button type="button" title="delete" class="btn btn-outline-secondary" (click)="eliminarPasaje(item)" ><i class="fas fa-trash-alt"></i></button>
+          </td>  
         </tr>
       </tbody>
       <tfoot>

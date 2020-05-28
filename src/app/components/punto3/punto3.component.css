@@ -4,3 +4,11 @@
 .fondo-body{
     background-color: #e5e5e565;
 }
+.fondoImagen{
+    background-image: url("./../../../assets/img/fondoAvion.jpg");
+    background-repeat: no-repeat;
+    background-size:100% 100%;
+}
+.opacidad{
+    opacity: 92%;
+}

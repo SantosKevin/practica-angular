@@ -13,3 +13,11 @@
 .ocultar{
     display: none;
 }
+.fondoImagen{
+    background-image: url("./../../../assets/img/fondoAhorcado.jpg");
+    background-repeat: no-repeat;
+    background-size:100% 100%;
+}
+.opacidad{
+    opacity: 92%;
+}

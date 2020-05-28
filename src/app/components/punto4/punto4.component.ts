@@ -83,6 +83,9 @@ export class Punto4Component implements OnInit {
   //activa el boton de perdio o gano para mostrar el modal de fin de juego
   public activarBoton(estado: string){
     if(estado == "perdio"){
+      this.palabraArray = new Array<string>();
+      this.palabraActual = new Array<string>();
+      console.log("perdio");
       document.getElementById("modalBtnPerdio").click();
     }
     else{

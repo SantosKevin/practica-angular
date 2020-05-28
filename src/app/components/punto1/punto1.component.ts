@@ -27,9 +27,11 @@ export class Punto1Component implements OnInit {
 
   //a medida que se escribe en el textarea va cambiando el tamaño de texto disponible
   public cambiarTamTexto(){
-    this.tamTexto = 120;
-    this.tamTexto -= this.mensaje.texto.length;
-    console.log(this.tamTexto);
+    if(this.mensaje.texto != null){
+      this.tamTexto = 120;
+      this.tamTexto -= this.mensaje.texto.length;
+    }
+    
   }
 
   //guarda el mensaje en el array y creamos un nuevo objeto mensaje
@@ -37,7 +39,7 @@ export class Punto1Component implements OnInit {
     this.mensaje.fecha = new Date();
     this.mensajes.push(this.mensaje);
     this.mensaje = new Mensaje();
-    this.mensaje.texto = "tu mensaje";
+    this.tamTexto = 120;
   }
 
   public limpiarMensaje(){

@@ -54,6 +54,7 @@ export class Punto3Component implements OnInit {
     this.pasajeService.agregarPasaje(this.pasaje);
     this.refrescarPasajes();
     this.pasaje = new Pasaje();
+    this.mostrarPrecio = false;
     this.establecerValorDefectoSelect();
   }
 
@@ -67,13 +68,16 @@ export class Punto3Component implements OnInit {
     this.pasaje = pasaje;
     this.btnGuardar = false;
     this.btnModificar = true;
+    this.mostrarPrecio = true;
   }
 
   modificarPasaje(){
+    this.pasaje.precioPasaje = this.precioFinal;
     this.pasajeService.modificarPasaje(this.pasaje);
     this.pasaje = new Pasaje();
     this.establecerValorDefectoSelect();
     this.btnGuardar = true; this. btnModificar = false;
+    this.mostrarPrecio = false;
     this.refrescarPasajes();
   }
 
@@ -87,6 +91,9 @@ export class Punto3Component implements OnInit {
     if(this.pasaje.precioPasaje != null && this.pasaje.categoriaPasajero != null){
         this.mostrarPrecio = true;
         this.actualizarPrecioFinal();
+    }
+    else{
+      this.mostrarPrecio = false;
     }
   }
 

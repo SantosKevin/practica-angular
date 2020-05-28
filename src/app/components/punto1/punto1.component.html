@@ -1,85 +1,100 @@
-<div class="row mt-5 mb-5 justify-content-center">
-    <div class="col-12 col-md-8">
-        <form class="card letra" #formMensaje="ngForm">
-            <div class="card-header fondo"> 
-                <h3 class="elipse font-weight-bold"> <span> </span> Envia tu mensaje: <span> </span></h3>  
-            </div> 
-              <div class="card-body fondo-body">
+<div class="fondoImagen">
+    <div class="row mt-3 mb-5 justify-content-center p-2 opacidad">
+      <div class="col-12 col-md-8">
+          <form class="card letra" #formMensaje="ngForm">
+              <div class="card-header fondo"> 
+                  <h3 class="elipse font-weight-bold"> <span> </span> Envia tu mensaje: <span> </span></h3>  
+              </div> 
+                <div class="card-body fondo-body">
+                  <div class="row form-group">
+                    <label class="col-sm-12 col-md-2 font-weight-bold">Para: </label>
+                    <input class="form-control col-sm-12 col-md-10"  #numero="ngModel" type="tel" pattern="[0-9]{3}[-][0-9]{7}" name="txtPara" [(ngModel)]="mensaje.para" placeholder="Telefono destino 388-1234567" required/>
+                    <div *ngIf="numero.invalid && (numero.dirty || numero.touched)" class="bg-danger mt-1 text-white col-sm-12 offset-md-2 col-md-10">
+                      <div *ngIf="numero.errors.required">
+                        Telefono es requerido.
+                      </div>
+                      <div *ngIf="numero.errors.pattern">
+                        Telefono destino debe seguir el patron 123-1234567 y no superar los 11 caracteres
+                      </div>
+                    </div>
+                  </div>
                 <div class="row form-group">
-                  <label class="col-sm-12 col-md-2 font-weight-bold">Para: </label>
-                  <input class="form-control col-sm-12 col-md-10"  #numero="ngModel" type="tel" pattern="[0-9]{3}[-][0-9]{7}" name="txtPara" [(ngModel)]="mensaje.para" placeholder="Telefono destino 388-1234567" required/>
-                  <div *ngIf="numero.invalid && (numero.dirty || numero.touched)" class="bg-danger mt-1 text-white col-sm-12 offset-md-4 col-md-8">
-                    <div *ngIf="numero.errors.required">
-                      Telefono es requerido.
+                  <label class="col-sm-12 col-md-2 font-weight-bold" >De: </label>
+                  <input class="form-control col-sm-12 col-md-10" #desde="ngModel" type="tel" pattern="[0-9]{3}[-][0-9]{7}" name="txtDe" [(ngModel)]="mensaje.desde" placeholder="Escribe tu numero 123-1234567" required />
+                  <div *ngIf="desde.invalid && (desde.dirty || desde.touched)" class="bg-danger mt-1 text-white col-sm-12 offset-md-2 col-md-10">
+                    <div *ngIf="desde.errors.required">
+                      Telefono origen es requerido.
                     </div>
-                    <div *ngIf="numero.errors.pattern">
-                      Telefono destino debe seguir el patron 123-1234567 y no superar los 11 caracteres
+                    <div *ngIf="desde.errors.pattern">
+                      Telefono origen debe seguir el patron 123-1234567 y no superar los 11 caracteres
                     </div>
                   </div>
                 </div>
-              <div class="row form-group">
-                <label class="col-sm-12 col-md-2 font-weight-bold" >De: </label>
-                <input class="form-control col-sm-12 col-md-10" #desde="ngModel" type="tel" pattern="[0-9]{3}[-][0-9]{7}" name="txtDe" [(ngModel)]="mensaje.desde" placeholder="Escribe tu numero 123-1234567" required />
-                <div *ngIf="desde.invalid && (desde.dirty || desde.touched)" class="bg-danger mt-1 text-white col-sm-12 offset-md-4 col-md-8">
-                  <div *ngIf="desde.errors.required">
-                    Telefono origen es requerido.
-                  </div>
-                  <div *ngIf="desde.errors.pattern">
-                    Telefono origen debe seguir el patron 123-1234567 y no superar los 11 caracteres
-                  </div>
+                <div class="row"> 
+                  <label class="col-12 col-md-8 font-weight-bold">Tu mensaje: </label> 
+                  <label class="col-12 col-md-4">Te quedan: {{tamTexto}} letras</label>
                 </div>
-              </div>
-              <div class="row"> 
-                <label class="col-12 col-md-8 font-weight-bold">Tu mensaje: </label> 
-                <label class="col-12 col-md-4">Te quedan: {{tamTexto}} letras</label>
-              </div>
-              
-              <div class="row form-group"> 
-                <textarea class="form-control mr-2 ml-2" #textoMensaje="ngModel" [maxlength]="tamMaxTexto" rows="5" name="txtTexto" [(ngModel)]="mensaje.texto" (ngModelChange)="cambiarTamTexto()" required >  
-                </textarea>
-                <div *ngIf="textoMensaje.invalid && (textoMensaje.dirty || textoMensaje.touched)" class="bg-danger mt-1 text-white col-sm-12 offset-md-4 col-md-8">
-                  <div *ngIf="textoMensaje.errors.required">
-                    El mensaje debe tener al menos 1 caracter
+                
+                <div class="row form-group"> 
+                  <textarea class="form-control mr-2 ml-2" #textoMensaje="ngModel" [maxlength]="tamMaxTexto" rows="5" name="txtTexto" [(ngModel)]="mensaje.texto" (ngModelChange)="cambiarTamTexto()" required >  
+                  </textarea>
+                  <div *ngIf="textoMensaje.invalid && (textoMensaje.dirty || textoMensaje.touched)" class="bg-danger mt-1 text-white col-sm-12">
+                    <div *ngIf="textoMensaje.errors.required">
+                      El mensaje debe tener al menos 1 caracter
+                    </div>
                   </div>
                 </div>
+                <div class="row form-group">
+                  <div class="col-12 text-right">
+                    <button type="button" class="btn btn-outline-dark  elipse ml-2 " (click)="abrirModal(contenido)" [disabled]="!(formMensaje.form.valid)"><i class="fas fa-check-square"></i> Enviar</button>            
+                    <button type="button" class="btn btn-outline-dark  elipse ml-2 " (click)="limpiarMensaje()" ><i class="fas fa-broom"></i> Limpiar</button>            
+                  </div>
+                </div>           
+                *el boton limpiar solo limpia el mensaje.
               </div>
-              <div class="row form-group">
-                <div class="col-12 text-right">
-                  <button type="button" class="btn btn-outline-dark  elipse ml-2 " (click)="abrirModal(contenido)" [disabled]="!(formMensaje.form.valid)"><i class="fas fa-check-square"></i> Enviar</button>            
-                  <button type="button" class="btn btn-outline-dark  elipse ml-2 " (click)="limpiarMensaje()" ><i class="fas fa-broom"></i> Limpiar</button>            
-                </div>
-              </div>           
-              *el boton limpiar solo limpia el mensaje.
-            </div>
-          </form>
-    </div>
-  <!-- parte del modal -->
-    <ng-template #contenido let-c="close" let-d="dismiss">
-     <div class="modal-header fondo">
-       <h4 class="modal-title" id="modal-basic-title">Resumen del Mensaje:</h4>
-       <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-         <span aria-hidden="true">&times;</span>
-       </button>
-    </div>
-     <div class="modal-body fondo-body">
-       <form>
-         <div class="form-group">
-             <label class="font-weight-bold"><i class="fas fa-sort-numeric-up"></i> Para:</label>
-               {{mensaje.para}} <hr> 
-            <label class="font-weight-bold"><i class="fas fa-sort-numeric-down-alt"></i> De:</label>
-               {{mensaje.desde}} <hr>
-             <label class="font-weight-bold"><i class="fas fa-envelope-open-text"></i> Mensaje:</label>
-            <div class="input-group">
-                <label > {{mensaje.texto}} </label>
-             </div>
-         </div>
-      </form>
-     </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-outline-dark" (click)="enviarMensaje(); formMensaje.reset()" (click)="c('Save click')">Aceptar</button>
-     </div>
-   </ng-template>
+            </form>
+      </div>
+    
+  </div>
 </div>
+
+
+<!-- parte del modal -->
+<ng-template #contenido let-c="close" let-d="dismiss" class="row">
+  <div class="modal-header fondo col-12">
+       <h4 class="modal-title" id="modal-basic-title">Resumen del Mensaje:</h4>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+ </div>
+  <div class="modal-body fondo-body col-12">
+    <form>
+      <div class="form-group">
+          <div class="row">
+             <label class="col-12 col-md-3 font-weight-bold"><i class="fas fa-sort-numeric-up"></i> Para:</label>
+              <div class="col-12 col-md-9"> {{mensaje.para}} </div> 
+          </div>
+          <hr>
+          <div class="row">
+             <label class="col-12 col-md-3 font-weight-bold"><i class="fas fa-sort-numeric-down-alt"></i> De:</label>
+            <div class="col-12 col-md-9"> {{mensaje.desde}}</div>  <hr>
+          </div>
+          <hr>
+         <div class="row">
+           <label class=" col-12 font-weight-bold"><i class="fas fa-envelope-open-text"></i> Mensaje:</label>
+            
+          </div>
+          <div class="row textoCortado">
+            <label class="col-12"> {{mensaje.texto}} </label>
+           </div>
+      </div>
+   </form>
+  </div>
+ <div class="modal-footer col-12">
+   <button type="button" class="btn btn-outline-dark" (click)="enviarMensaje(); formMensaje.reset()" (click)="c('Save click')">Aceptar</button>
+  </div>
+</ng-template>
+
 
 <div class="row justify-content-center">
   <div class="col-12 col-md-10 text-center">
@@ -105,7 +120,7 @@
         <tr *ngFor="let item of mensajes">
           <td> {{item.para}} </td>
           <td> {{item.desde}} </td>
-          <td> {{item.texto}} </td>
+          <td class=""> {{item.texto}} </td>
           <td> {{item.fecha | date:'dd/MM/yyyy'}} </td>       
         </tr>
       </tbody>

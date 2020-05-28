@@ -1,78 +1,84 @@
-
-<div class=" row mt-3 mb-3 justify-content-center">
-        
-    <div class="col-10 justify-content-center">
-        <div class="row font-weight-bold h3 text-center">
-            ELIGA LA TEMATICA!
-        </div>
-        <div class="row justify-content-center">
-            <select class="col-sm-12 col-md-10 m-2 h5" [(ngModel)]="tematica" (change)="actualizarTematica()" > 
-                <option value="animales">Animales</option>
-                <option value="utiles">Utiles Escolares</option>
-            </select>
-            <div *ngIf="alertaSeleccion" class="h5 alert-info"><i class="fas fa-arrow-circle-up"></i> no te olvides de seleccionar una categoria para iniciar</div>
+<div class="fondoImagen">
+    <div class=" row mt-3 mb-3 justify-content-center opacidad">
+            
+        <div class="col-10 justify-content-center">
+            <div class="row font-weight-bold h3 text-center text-white">
+                ELIGA LA TEMATICA!
+            </div>
+            <div class="row justify-content-center">
+                <select class="col-sm-12 col-md-10 m-2 h5" [(ngModel)]="tematica" (change)="actualizarTematica()" > 
+                    <option value="animales">Animales</option>
+                    <option value="utiles">Utiles Escolares</option>
+                </select>
+                <div *ngIf="alertaSeleccion" class="h5 alert-info"><i class="fas fa-arrow-circle-up"></i> no te olvides de seleccionar una categoria para iniciar</div>
+            </div>
         </div>
     </div>
-</div>
 
-<div class="row mt-4 mb-4 justify-content-center">
-    <div class="col-12 col-md-8">
-        <div class="card letra">
-            <div class="card-header fondo"> 
-                <h3 class=" font-weight-bold p3">  A JUGAR!:  </h3>
-                <div class="row text-center">
-                    <div class="col-6 font-weight-bold">
-                        VIDAS RESTANTES: 
-                        <div class="d-inline">
-                            <div class="d-inline" *ngFor="let item of [0,1,2,3,4,5]; index as i"> 
-                                <i *ngIf="i < vidas" class="fas fa-heart mr-1 d-sm-inline" style="color: red;"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6 font-weight-bold">
-                        PUNTAJE: <div class=" font-weight-bold d-inline">  <span class="h4 text-success">{{puntaje}} <i class="fas fa-star text-success"></i></span> </div>
-                    </div>
-                </div>
-            </div>
-            <div class="card-body" id="id">
-                <div *ngFor="let pal of palabras; index as i "> 
-                    <div *ngIf="i == indice">
-                        <div>
-                            <img [src]="pal.urlImagen" alt="imagen" class="img-fluid">
-                        </div>
-                        <div class="text-center">
-                           
-                            <hr>
-                            <div class="row m1">
-                                <div class="col-12">
-                                    <div class="text-center d-inline p-2 col-3" *ngFor="let item of palabraArray; index as i "  >
-                                        <input *ngIf="mostrarInputs" type="text" class="entrada mr-1 mb-1 text-center" maxlength="1" [(ngModel)]="palabraActual[i]" (ngModelChange)="comprobarLetra(i,pal)" style="text-transform:uppercase;"> 
-                                    </div>
+    <div class="row mt-4 mb-4 justify-content-center opacidad pb-2">
+        <div class="col-12 col-md-8">
+            <div class="card letra">
+                <div class="card-header fondo"> 
+                    <h3 class=" font-weight-bold p3">  A JUGAR!:  </h3>
+                    <div class="row text-center">
+                        <div class="col-6 font-weight-bold">
+                            VIDAS RESTANTES: 
+                            <div class="d-inline">
+                                <div class="d-inline" *ngFor="let item of [0,1,2,3,4,5]; index as i"> 
+                                    <i *ngIf="i < vidas" class="fas fa-heart mr-1 d-sm-inline" style="color: red;"></i>
                                 </div>
                             </div>
                         </div>
-                        <hr>
-                        <div class="row mt-2 mb-2">
-                            <div class="col-12 font-weight-bold text-center p3">
-                                 {{pal.palabraEspaniol | uppercase}}
-                            </div>
-                           
+                        <div class="col-6 font-weight-bold">
+                            PUNTAJE: <div class=" font-weight-bold d-inline">  <span class="h4 text-success">{{puntaje}} <i class="fas fa-star text-success"></i></span> </div>
                         </div>
-                    </div>                   
+                    </div>
                 </div>
-                <button class="btn btn-danger btn-block" [disabled]="iniciarOK" (click)="iniciarJuego()"> INICIAR JUEGO!</button>
+                <div class="card-body" id="id">
+                    <div *ngFor="let pal of palabras; index as i "> 
+                        <div *ngIf="i == indice">
+                            <div>
+                                <img [src]="pal.urlImagen" alt="imagen" class="img-fluid">
+                            </div>
+                            <div class="text-center">
+                            
+                                <hr>
+                                <div class="row m1">
+                                    <div class="col-12">
+                                        <div class="text-center d-inline p-2 col-3" *ngFor="let item of palabraArray; index as i "  >
+                                            <input *ngIf="mostrarInputs" type="text" class="entrada mr-1 mb-1 text-center" maxlength="1" [(ngModel)]="palabraActual[i]" (ngModelChange)="comprobarLetra(i,pal)" style="text-transform:uppercase;"> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row mt-2 mb-2">
+                                <div class="col-12 font-weight-bold text-center p3">
+                                    {{pal.palabraEspaniol | uppercase}}
+                                </div>
+                            
+                            </div>
+                        </div>                   
+                    </div>
+                    <button class="btn btn-danger btn-block" [disabled]="iniciarOK" (click)="iniciarJuego()"> INICIAR JUEGO!</button>
+                </div>
             </div>
         </div>
-    </div>
 
+    </div>
 </div>
 
+
 <div class="row">
-    <div class="col-12 col-md-6 p-2 card bg-light">
-        <p class="font-weight-bold">Instrucciones: </p> 
-        <p>Complete la palabra en ingles. </p> 
+    <div class="col-12 p-2 card bg-light">
+        <div class="bg-dark">
+            <p class="font-weight-bold text-white h4 p-3">Instrucciones: </p> 
+        </div>
+        <p class="mt-2"> Complete la palabra en ingles. </p>
+        <p> Puede hacerlo eligiendo cualquier posicion y escribiendo la letra. </p>  
         <p> Cada vez que no acierte una palabra perderá una vida.</p> 
-        <p>Cada vez que acierte sumará un punto. </p> 
+        <p> Cada vez que acierte sumará un punto. </p> 
+        <p> Cada vez que pierda o gane se abrir&aacute; un modal informando su resultado. Al cerrarlo el juego se reiniciar&aacute; autom&aacute;ticamente. </p> 
     </div>
 </div>
 <!-- este input boton es solo para activar el modal de ganado -->

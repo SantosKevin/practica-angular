@@ -11,3 +11,17 @@
 .fondo-body{
     background-color: #e5e5e565;
 }
+
+.fondoImagen{
+    background-image: url("./../../../assets/img/fondoHome.jpg");
+    background-repeat: no-repeat;
+    background-size:100% 100%;
+}
+.textoCortado{
+    width: 100%;
+    height: auto;
+  word-wrap: break-word;
+}
+.opacidad{
+    opacity: 95%;
+}
